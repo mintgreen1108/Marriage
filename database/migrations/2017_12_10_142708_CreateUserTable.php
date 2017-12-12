@@ -24,6 +24,8 @@ class CreateUserTable extends Migration
             $table->string('area');
             $table->string('job');
             $table->string('want');
+            $table->string('introduction');
+            $table->timestamps();
         });
     }
 

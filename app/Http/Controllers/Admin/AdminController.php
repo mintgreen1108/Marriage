@@ -7,12 +7,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function index()
     {
-        return Response::json(['data' => AdminModel::all()], 200);
+        return view('admin.index', ['data' => AdminModel::all()]);
     }
 
     public function store(Request $request)
@@ -22,6 +27,21 @@ class AdminController extends Controller
         $admin->password = md5($request->input('password'));
         $admin->role     = $request->input('role');
         $admin->save();
+        return redirect('/admin/account');
+    }
+
+    public function update(Request $request)
+    {
+        $admin           = AdminModel::find($request->input('admin_id'));
+        $admin->name     = $request->input('name');
+        $admin->password = md5($request->input('password'));
+        $admin->role     = $request->input('role');
+        $admin->save();
         return Response::json(['success'], 200);
+    }
+
+    public function destroy(Request $request)
+    {
+        AdminModel::destroy($request->input('admin_id'));
     }
 }
