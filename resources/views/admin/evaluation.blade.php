@@ -66,10 +66,10 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{$_SESSION['admin_name']}}</h5>
+                <h5 class="centered">{{session('admin_name')}}</h5>
 
                 <li class="mt">
-                    <a class="active" href="/admin/account">
+                    <a href="/admin/account">
                         <i class="fa fa-dashboard"></i>
                         <span>管理员管理</span>
                     </a>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/evaluation">
+                    <a class="active" href="/admin/evaluation">
                         <i class="fa fa-book"></i>
                         <span>用户评价</span>
                     </a>
@@ -106,78 +106,38 @@
         <section class="wrapper">
             <!-- COMPLEX TO DO LIST -->
             <div class="row mt">
+
                 <div class="col-md-12">
-                    <section class="task-panel tasks-widget">
-                        <div class="panel-heading">
-                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>管理员列表</h5></div>
-                            <br>
-                        </div>
-                        <div class="panel-body">
-                            <div class="task-content">
+                    <div class="content-panel">
+                        <h4><i class="fa fa-angle-right"></i> 评价列表</h4>
+                        <hr>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>评价人</th>
+                                <th>内容</th>
+                                <th>分数</th>
+                                <th>对象</th>
+                                <th>创建时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($data as $value)
+                                <tr>
+                                    <td>{{$value->user->name}}</td>
+                                    <td>{{$value->content}}</td>
+                                    <td>{{$value->score}}</td>
+                                    <td>{{$value->evaluated->name}}</td>
+                                    <td>{{$value->created_at}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <! --/content-panel -->
+                </div><!-- /col-md-12 -->
 
-                                <ul class="task-list">
-                                    @foreach($data as $admin)
-                                        <li id="admin_{{$admin->id}}">
-                                            <div class="task-title">
-                                                <span class="name task-title-sp">{{$admin->name}}</span>
-                                                <span class="role badge bg-theme">{{$admin->role}}</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button id="{{$admin->id}}"
-                                                            class="btn btn-primary btn-xs btn-update"><i
-                                                                class="fa fa-pencil"></i>
-                                                    </button>
-                                                    <a href="account/{{$admin->id}}"
-                                                       class="btn_delete btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="row mt">
-                        <div class="col-lg-12">
-                            <div class="form-panel">
-                                <h4 class="mb"><i class="fa fa-angle-right"></i> Input Messages</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/admin/account">
-                                    <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">用户名</label>
-                                        <div class="col-lg-10">
-                                            <input id="user_name" type="text" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-warning">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">密码</label>
-                                        <div class="col-lg-10">
-                                            <input id="user_password" type="password" name="password"
-                                                   class="form-control"
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputError">角色</label>
-                                        <div class="col-lg-10">
-                                            <input id="user_role" type="text" name="role" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputError"></label>
-                                        <div class="col-lg-10 add-task-row">
-                                            <button type="submit" class="btn btn-success btn-sm pull-left"
-                                                    href="todo_list.html#">确定
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div><!-- /form-panel -->
-                        </div><!-- /col-lg-12 -->
-                    </div><!-- /row -->
-                </div><!-- /col-md-12-->
-            </div><!-- /row -->
-
+            </div><!-- row -->
 
             <!-- SORTABLE TO DO LIST -->
         </section>
@@ -210,10 +170,8 @@
 </script>
 
 <script type="application/javascript">
-    $('.btn-update').click(function () {
-        $('#user_name').val($(this).prevAll('.name').val());
-        $('#user_password').val('');
-        $('#user_role').val($(this).prevAll('.role').val());
+    $('.btn_delete').onclick(function ($this) {
+
     });
 </script>
 </body>

@@ -66,10 +66,10 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{$_SESSION['admin_name']}}</h5>
+                <h5 class="centered">{{session('admin_name')}}</h5>
 
                 <li class="mt">
-                    <a class="active" href="/admin/account">
+                    <a href="/admin/account">
                         <i class="fa fa-dashboard"></i>
                         <span>管理员管理</span>
                     </a>
@@ -88,7 +88,7 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/advice">
+                    <a class="active"  href="/admin/advice">
                         <i class="fa fa-tasks"></i>
                         <span>推荐相亲对象</span>
                     </a>
@@ -106,78 +106,52 @@
         <section class="wrapper">
             <!-- COMPLEX TO DO LIST -->
             <div class="row mt">
-                <div class="col-md-12">
-                    <section class="task-panel tasks-widget">
-                        <div class="panel-heading">
-                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>管理员列表</h5></div>
-                            <br>
-                        </div>
-                        <div class="panel-body">
-                            <div class="task-content">
-
-                                <ul class="task-list">
-                                    @foreach($data as $admin)
-                                        <li id="admin_{{$admin->id}}">
-                                            <div class="task-title">
-                                                <span class="name task-title-sp">{{$admin->name}}</span>
-                                                <span class="role badge bg-theme">{{$admin->role}}</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button id="{{$admin->id}}"
-                                                            class="btn btn-primary btn-xs btn-update"><i
-                                                                class="fa fa-pencil"></i>
-                                                    </button>
-                                                    <a href="account/{{$admin->id}}"
-                                                       class="btn_delete btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                <div class="col-lg-12">
+                    <div class="form-panel">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i>推荐</h4>
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="姓名/手机号">
                             </div>
-                        </div>
-                    </section>
-                    <div class="row mt">
-                        <div class="col-lg-12">
-                            <div class="form-panel">
-                                <h4 class="mb"><i class="fa fa-angle-right"></i> Input Messages</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/admin/account">
-                                    <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">用户名</label>
-                                        <div class="col-lg-10">
-                                            <input id="user_name" type="text" name="name" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-warning">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">密码</label>
-                                        <div class="col-lg-10">
-                                            <input id="user_password" type="password" name="password"
-                                                   class="form-control"
-                                            >
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputError">角色</label>
-                                        <div class="col-lg-10">
-                                            <input id="user_role" type="text" name="role" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputError"></label>
-                                        <div class="col-lg-10 add-task-row">
-                                            <button type="submit" class="btn btn-success btn-sm pull-left"
-                                                    href="todo_list.html#">确定
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div><!-- /form-panel -->
-                        </div><!-- /col-lg-12 -->
-                    </div><!-- /row -->
-                </div><!-- /col-md-12-->
+                            <button type="submit" class="btn btn-theme">搜索</button>
+                        </form>
+                    </div><!-- /form-panel -->
+                </div><!-- /col-lg-12 -->
             </div><!-- /row -->
 
+            <div class="row mt">
+                <div class="col-md-12">
+                    <div class="content-panel">
+                        <table class="table table-striped table-advance table-hover">
+                            <h4><i class="fa fa-angle-right"></i>推荐列表</h4>
+                            <hr>
+                            <thead>
+                            <tr>
+                                <th><i class="fa"></i> 姓名</th>
+                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> 性别</th>
+                                <th><i class="fa "></i> 年龄</th>
+                                <th><i class="fa "></i> 工作</th>
+                                <th><i class="fa "></i> 手机号</th>
+                                <th><i class="fa "></i> 类型</th>
+                                <th><i class=" fa "></i> 城市</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>我是姓名</td>
+                                    <td>我是性别</td>
+                                    <td>我是年龄</td>
+                                    <td>我是工作</td>
+                                    <td>我是手机号</td>
+                                    <td>我是类型</td>
+                                    <td>我是城市</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- /content-panel -->
+                </div><!-- /col-md-12 -->
+            </div><!-- /row -->
 
             <!-- SORTABLE TO DO LIST -->
         </section>
@@ -210,10 +184,8 @@
 </script>
 
 <script type="application/javascript">
-    $('.btn-update').click(function () {
-        $('#user_name').val($(this).prevAll('.name').val());
-        $('#user_password').val('');
-        $('#user_role').val($(this).prevAll('.role').val());
+    $('.btn_delete').onclick(function ($this) {
+
     });
 </script>
 </body>

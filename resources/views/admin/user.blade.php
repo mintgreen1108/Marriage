@@ -81,21 +81,14 @@
                         <span>用户管理</span>
                     </a>
                 </li>
-
                 <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-cogs"></i>
-                        <span>用户分类管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="/admin/evaluation">
                         <i class="fa fa-book"></i>
                         <span>用户评价</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="javascript:;">
+                    <a href="/admin/advice">
                         <i class="fa fa-tasks"></i>
                         <span>推荐相亲对象</span>
                     </a>
@@ -111,60 +104,59 @@
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
+            <div class="row mt">
+                <div class="col-lg-12">
+                    <div class="form-panel">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i>管理</h4>
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="姓名/手机号">
+                            </div>
+                            <button type="submit" class="btn btn-theme">搜索</button>
+                        </form>
+                    </div><!-- /form-panel -->
+                </div><!-- /col-lg-12 -->
+            </div><!-- /row -->
+
             <!-- COMPLEX TO DO LIST -->
             <div class="row mt">
                 <div class="col-md-12">
-                    <section class="task-panel tasks-widget">
-                        <div class="panel-heading">
-                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>管理员列表</h5></div>
-                            <br>
-                        </div>
-                        <div class="panel-body">
-                            <div class="task-content">
-
-                                <ul class="task-list">
-                                    <li >
-                                        <div class="task-title">
-                                            <span class="task-title-sp">姓名</span>
-                                            <span class="task-title-sp">手机号</span>
-                                            <span class="task-title-sp">性别</span>
-                                            <span class="task-title-sp">年龄</span>
-                                            <span class="task-title-sp">类型</span>
-                                            <span class="task-title-sp">地区</span>
-                                            <span class="task-title-sp">工作</span>
-                                            <span class="task-title-sp">意向</span>
-                                        </div>
-                                    </li>
-                                    @foreach($data as $user)
-                                        <li id="admin_{{$user->id}}">
-                                            <div class="task-title">
-                                                <span class="task-title-sp">{{$user->name}}</span>
-                                                <span class="task-title-sp">{{$user->mobile}}</span>
-                                                <span class="task-title-sp">{{($user->sex==1)?'男':'女'}}</span>
-                                                <span class="task-title-sp">{{$user->age}}</span>
-                                                <span class="task-title-sp">{{$user->type}}</span>
-                                                <span class="task-title-sp">{{$user->area}}</span>
-                                                <span class="task-title-sp">{{$user->job}}</span>
-                                                <span class="task-title-sp">{{$user->want}}</span>
-                                                <div class="pull-right hidden-phone">
-                                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i>
-                                                    </button>
-                                                    <button name="{{$user->id}}"
-                                                            class="btn_delete btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o "></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                        </div>
-                    </section>
-                </div><!-- /col-md-12-->
+                    <div class="content-panel">
+                        <table class="table table-striped table-advance table-hover">
+                            <h4><i class="fa fa-angle-right"></i>用户列表</h4>
+                            <hr>
+                            <thead>
+                            <tr>
+                                <th><i class="fa"></i> 姓名</th>
+                                <th ><i class="fa"></i> 性别</th>
+                                <th><i class="fa "></i> 年龄</th>
+                                <th><i class="fa "></i> 工作</th>
+                                <th><i class="fa "></i> 手机号</th>
+                                <th><i class="fa "></i> 类型</th>
+                                <th><i class=" fa "></i> 城市</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($data as $user)
+                                <tr>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->sex==1?'男':'女'}}</td>
+                                    <td>{{$user->age}}</td>
+                                    <td>{{$user->job}}</td>
+                                    <td>{{$user->mobile}}</td>
+                                    <td>{{$user->type}}</td>
+                                    <td>{{$user->province}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div><!-- /content-panel -->
+                </div><!-- /col-md-12 -->
             </div><!-- /row -->
-
 
             <!-- SORTABLE TO DO LIST -->
         </section>

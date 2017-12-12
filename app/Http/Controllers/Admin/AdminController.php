@@ -40,8 +40,10 @@ class AdminController extends BaseController
         return Response::json(['success'], 200);
     }
 
-    public function destroy(Request $request)
+    public function show($id)
     {
-        AdminModel::destroy($request->input('admin_id'));
+        var_dump($id);
+        AdminModel::destroy($id);
+        return redirect('admin/account');
     }
 }
