@@ -108,11 +108,11 @@
                 <div class="col-lg-12">
                     <div class="form-panel">
                         <h4 class="mb"><i class="fa fa-angle-right"></i>管理</h4>
-                        <form class="form-inline" role="form">
+                        <form class="form-inline" role="form" method="POST" action="admin/user">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="姓名/手机号">
+                                <input type="text" class="form-control" name="class" placeholder="类别">
                             </div>
-                            <button type="submit" class="btn btn-theme">搜索</button>
+                            <button type="submit" class="btn btn-theme">分类</button>
                         </form>
                     </div><!-- /form-panel -->
                 </div><!-- /col-lg-12 -->

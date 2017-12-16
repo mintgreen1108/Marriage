@@ -16,6 +16,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
     protected $adminNamespace = 'App\Http\Controllers\Admin';
+    protected $homeNamespace = 'App\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -74,5 +75,8 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('admin')
             ->namespace($this->adminNamespace)
             ->group(base_path('routes/admin.php'));
+        Route::prefix('home')
+            ->namespace($this->homeNamespace)
+            ->group(base_path('routes/home.php'));
     }
 }
