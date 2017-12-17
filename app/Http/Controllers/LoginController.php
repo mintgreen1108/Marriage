@@ -23,7 +23,7 @@ class LoginController extends Controller
             $_SESSION['user_id']   = $user->id;
             return redirect('/home/index');
         } catch (\Throwable $e) {
-            return Response::json(['msg' => '错误'], 500);
+            return Response::json(['msg' => '用户名或密码错误'], 500);
         }
     }
 

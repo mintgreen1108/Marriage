@@ -22,22 +22,20 @@ class AdminController extends BaseController
 
     public function store(Request $request)
     {
-        $admin           = new AdminModel();
-        $admin->name     = $request->input('name');
-        $admin->password = md5($request->input('password'));
-        $admin->role     = $request->input('role');
-        $admin->save();
+        if (empty($request->input('id', ''))) {
+            $admin           = new AdminModel();
+            $admin->name     = $request->input('name');
+            $admin->password = md5($request->input('password'));
+            $admin->role     = $request->input('role');
+            $admin->save();
+        } else {
+            $admin           = AdminModel::find($request->input('id'));
+            $admin->name     = $request->input('name');
+            $admin->password = (($pwd = $request->input('password')) == 'null') ? $admin->password : md5($pwd);
+            $admin->role     = $request->input('role');
+            $admin->save();
+        }
         return redirect('/admin/account');
-    }
-
-    public function update(Request $request)
-    {
-        $admin           = AdminModel::find($request->input('admin_id'));
-        $admin->name     = $request->input('name');
-        $admin->password = md5($request->input('password'));
-        $admin->role     = $request->input('role');
-        $admin->save();
-        return Response::json(['success'], 200);
     }
 
     public function show($id)

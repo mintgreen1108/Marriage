@@ -119,8 +119,9 @@
                                     @foreach($data as $admin)
                                         <li id="admin_{{$admin->id}}">
                                             <div class="task-title">
-                                                <span class="name task-title-sp">{{$admin->name}}</span>
-                                                <span class="role badge bg-theme">{{$admin->role}}</span>
+                                                <span class="hidden span-id task-title-sp">{{$admin->id}}</span>
+                                                <span class="span-name task-title-sp">{{$admin->name}}</span>
+                                                <span class="span-role badge bg-theme">{{$admin->role}}</span>
                                                 <div class="pull-right hidden-phone">
                                                     <button id="{{$admin->id}}"
                                                             class="btn btn-primary btn-xs btn-update"><i
@@ -143,6 +144,7 @@
                             <div class="form-panel">
                                 <h4 class="mb"><i class="fa fa-angle-right"></i> Input Messages</h4>
                                 <form class="form-horizontal tasi-form" method="post" action="/admin/account">
+                                    <input id="user_id" type="text" name="id" class="form-control hidden">
                                     <div class="form-group has-success">
                                         <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">用户名</label>
                                         <div class="col-lg-10">
@@ -211,9 +213,10 @@
 
 <script type="application/javascript">
     $('.btn-update').click(function () {
-        $('#user_name').val($(this).prevAll('.name').val());
-        $('#user_password').val('');
-        $('#user_role').val($(this).prevAll('.role').val());
+        $('#user_id').val($(this).parent().prevAll('.span-id').text());
+        $('#user_name').val($(this).parent().prevAll('.span-name').text());
+        $('#user_password').val('null');
+        $('#user_role').val($(this).parent().prev('.span-role').text());
     });
 </script>
 </body>

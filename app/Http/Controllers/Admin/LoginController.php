@@ -24,7 +24,7 @@ class LoginController extends Controller
             $_SESSION['admin_id']   = $admin->id;
             return redirect('/admin/account');
         } catch (\Throwable $e) {
-            return Response::json(['msg' => $e->getMessage()], 500);
+            return Response::json(['msg' => '用户名或密码错误'], 500);
         }
     }
 

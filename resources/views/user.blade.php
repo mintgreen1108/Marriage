@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="">
 
-    <title>婚恋</title>
+    <title>个人中心</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="/home/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -109,13 +109,33 @@
                     @foreach($blog as $value)
                         <div class="heading">
                             <h4>{{$value->created_at}}</h4>
-                            <a href="">👍</a>
+                            <a class="user_like">👍👍👍</a>
+                            <input class="hidden blog" value="{{$value->id}}">
                         </div>
                         <div class="content">
                             <p>{{$value->content}}</p>
                         </div>
                     @endforeach
                 </div>
+                <article class="contact">
+                    <div class="art-header">
+                        <h2 class="center">评价</h2>
+                    </div>
+                    <div class="art-content">
+                        <div id="contact_form" class="form1">
+                            <label>对方姓名：
+                                <input id="ev_name" type="text" name="content" required>
+                            </label>
+                            <label>评价内容：
+                                <input id="ev_content" type="text" name="content" required>
+                            </label>
+                            <label>分数：
+                                <input id="ev_score" type="number" name="content" required>
+                            </label>
+                            <input id="ev_button" class="sendButton" type="submit" value="评价">
+                        </div>
+                    </div>
+                </article>
             </div>
             <div id="sidebar" class="col-md-4">
                 <div class="widget wid-about">
@@ -125,6 +145,7 @@
                     </div>
                     <div id="contact_form">
                         <a href="/home/user/logout">退出</a>
+                        <a class="right change-pwd" href="/home/user/logout">修改密码</a>
                     </div>
                 </div>
                 <div class="widget wid-tags">
@@ -133,7 +154,7 @@
                         <ul class="list-inline">
                             @foreach($visit as $value)
                                 <li>
-                                    <a href="/home/user/{{$value[0]->user_id}}">{{$value[0]->user->name}}</a>
+                                    <a href="/home/user/visit/{{$value[0]->user_id}}">{{$value[0]->user->name}}</a>
                                 </li>
                             @endforeach
                         </ul>
@@ -143,9 +164,21 @@
                     <div class="heading"><h4>点赞列表</h4></div>
                     <div class="content">
                         <ul class="list-inline">
-                            <li><a href="#">点赞人1</a></li>
-                            <li><a href="#">点赞人2</a></li>
-                            <li><a href="#">点赞人3</a></li>
+                            @foreach($like as $value)
+                                <li><a href="/home/user/visit/{{$value[0]->user_id}}">{{$value[0]->user->name}}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <div class="widget wid-links">
+                    <div class="heading"><h4>搜索关注</h4></div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-search" name="class" placeholder="姓名/手机号" required>
+                        <button type="submit" class="btn btn-theme btn-search">搜索</button>
+                    </div>
+                    <div class="content">
+                        <ul class="list-inline search-ul">
+
                         </ul>
                     </div>
                 </div>
@@ -153,9 +186,10 @@
                     <div class="heading"><h4>关注列表</h4></div>
                     <div class="content">
                         <ul>
-                            <li>关注1 <a href="#">取关</a></li>
-                            <li>关注2 <a href="#">取关</a></li>
-                            <li>关注3 <a href="#">取关</a></li>
+                            @foreach($focus as $value)
+                                <li>{{$value->focused_user->name}}<a
+                                            href="/home/user/cancelFocus/{{$value->focused_id}}">取关</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -195,6 +229,59 @@
             $(this).hoverdir();
         });
 
+        $('.btn-search').click(function () {
+            console.log($(this).prev('.input-search').val());
+            $.ajax({
+                type: 'POST',
+                url: 'search',
+                data: {'search': $(this).prev('.input-search').val()},
+                success: function (rsp) {
+                    var data = rsp.users;
+                    var a = '';
+                    for (var i = 0; i < data.length; i++) {
+                        a += '<li>' + data[i].name + '<a href="/home/user/focus/' + data[i].id + '">❤️❤️❤️</a></li>';
+                    }
+                    $('.search-ul').append(a);
+                },
+                dataType: 'json'
+            });
+        });
+
+        $('.change-pwd').click(function () {
+            var password = prompt('请输入新密码:', '');
+            if (password) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'changePwd',
+                    data: {'password': password},
+                    success: function (rsp) {
+                        if (rsp.status = 200) {
+                            alert('密码修复成功');
+                        } else
+                            alert('密码修改失败，请重新尝试');
+                    }
+                });
+            }
+        });
+
+        $('#ev_button').click(function () {
+            $.ajax({
+                type: "POST",
+                url: 'evaluation',
+                data: {
+                    'name': $('#ev_name').val(),
+                    'content': $('#ev_content').val(),
+                    'score': $('#ev_score').val()
+                },
+                success: function (rsp) {
+                    if (rsp.status == 200) {
+                        alert('评价成功');
+                    } else if (rsp.status == 404) {
+                        alert('评价对象不存在');
+                    }
+                }
+            });
+        });
     });
 </script>
 

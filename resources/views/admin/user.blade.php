@@ -108,11 +108,18 @@
                 <div class="col-lg-12">
                     <div class="form-panel">
                         <h4 class="mb"><i class="fa fa-angle-right"></i>管理</h4>
-                        <form class="form-inline" role="form" method="POST" action="admin/user">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="class" placeholder="类别">
+                        <form method="POST" action="/admin/user/classification">
+                            <div class="btn-group">
+                                <input class="hidden class-input" value="">
+                                <select id="class" name="class" size="1" class="sel">
+                                    <option>请选择分类</option>
+                                    <option class="option" value="性别">性别</option>
+                                    <option class="option" value="年龄">年龄</option>
+                                    <option class="option" value="工作">工作</option>
+                                    <option class="option" value="地区">地区</option>
+                                </select>
                             </div>
-                            <button type="submit" class="btn btn-theme">分类</button>
+                            <button type="submit" class="btn btn-theme btn-class">分类</button>
                         </form>
                     </div><!-- /form-panel -->
                 </div><!-- /col-lg-12 -->
@@ -128,11 +135,10 @@
                             <thead>
                             <tr>
                                 <th><i class="fa"></i> 姓名</th>
-                                <th ><i class="fa"></i> 性别</th>
+                                <th><i class="fa"></i> 性别</th>
                                 <th><i class="fa "></i> 年龄</th>
                                 <th><i class="fa "></i> 工作</th>
                                 <th><i class="fa "></i> 手机号</th>
-                                <th><i class="fa "></i> 类型</th>
                                 <th><i class=" fa "></i> 城市</th>
                                 <th></th>
                             </tr>
@@ -145,10 +151,12 @@
                                     <td>{{$user->age}}</td>
                                     <td>{{$user->job}}</td>
                                     <td>{{$user->mobile}}</td>
-                                    <td>{{$user->type}}</td>
-                                    <td>{{$user->province}}</td>
+                                    <td>{{$user->area}}</td>
                                     <td>
-                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        <a href="/admin/user/delete/{{$user->id}}" class="btn btn-danger btn-xs"><i
+                                                    class="fa fa-trash-o ">
+                                            </i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -189,8 +197,9 @@
 </script>
 
 <script type="application/javascript">
-    $('.btn_delete').onclick(function ($this) {
 
+    $('.btn-class').click(function () {
+        $('.class-input').val($("#class option:selected").val());
     });
 </script>
 </body>

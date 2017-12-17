@@ -44,9 +44,9 @@ MAIN CONTENT
                 <br>
                 <input type="text" class="form-control" name="sex" placeholder="性别" required>
                 <br>
-                <input type="text" class="form-control" name="mobile" placeholder="手机号" required>
+                <input type="number" class="form-control" name="mobile" placeholder="手机号" required>
                 <br>
-                <input type="text" class="form-control" name="age" placeholder="年龄" required>
+                <input type="number" class="form-control" name="age" placeholder="年龄" required>
                 <br>
                 <input type="text" class="form-control" name="area" placeholder="地区" required>
                 <br>

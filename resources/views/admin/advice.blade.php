@@ -88,7 +88,7 @@
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a class="active"  href="/admin/advice">
+                    <a class="active" href="/admin/advice">
                         <i class="fa fa-tasks"></i>
                         <span>推荐相亲对象</span>
                     </a>
@@ -109,11 +109,12 @@
                 <div class="col-lg-12">
                     <div class="form-panel">
                         <h4 class="mb"><i class="fa fa-angle-right"></i>推荐</h4>
-                        <form class="form-inline" role="form">
+                        <form class="form-inline" role="form" method="get" action="advice">
                             <div class="form-group">
-                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="姓名/手机号">
+                                <input name="search" type="text" class="form-control" id="exampleInputEmail2"
+                                       placeholder="姓名/手机号">
                             </div>
-                            <button type="submit" class="btn btn-theme">搜索</button>
+                            <button type="submit" class="btn btn-theme">推荐</button>
                         </form>
                     </div><!-- /form-panel -->
                 </div><!-- /col-lg-12 -->
@@ -128,25 +129,27 @@
                             <thead>
                             <tr>
                                 <th><i class="fa"></i> 姓名</th>
-                                <th class="hidden-phone"><i class="fa fa-question-circle"></i> 性别</th>
+                                <th class="hidden-phone"> 性别</th>
                                 <th><i class="fa "></i> 年龄</th>
                                 <th><i class="fa "></i> 工作</th>
                                 <th><i class="fa "></i> 手机号</th>
-                                <th><i class="fa "></i> 类型</th>
                                 <th><i class=" fa "></i> 城市</th>
+                                <th><i class=" fa "></i> 自我介绍</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($data as $value)
                                 <tr>
-                                    <td>我是姓名</td>
-                                    <td>我是性别</td>
-                                    <td>我是年龄</td>
-                                    <td>我是工作</td>
-                                    <td>我是手机号</td>
-                                    <td>我是类型</td>
-                                    <td>我是城市</td>
+                                    <td>{{$value->name}}</td>
+                                    <td>{{$value->sex==1?'男':'女'}}</td>
+                                    <td>{{$value->age}}</td>
+                                    <td>{{$value->job}}</td>
+                                    <td>{{$value->mobile}}</td>
+                                    <td>{{$value->area}}</td>
+                                    <td>{{$value->introduction}}</td>
                                 </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div><!-- /content-panel -->

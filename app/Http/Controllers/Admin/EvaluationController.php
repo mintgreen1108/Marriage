@@ -9,6 +9,6 @@ class EvaluationController extends Controller
 {
     public function index()
     {
-        return view('admin.evaluation', ['data' => EvaluationModel::all()]);
+        return view('admin.evaluation', ['data' => EvaluationModel::with(['user', 'evaluated'])->get()]);
     }
 }

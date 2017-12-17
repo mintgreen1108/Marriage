@@ -15,6 +15,7 @@ class checkUserLogin
      */
     public function handle($request, Closure $next)
     {
+        if (!isset($_SESSION)) session_start();
         if (empty($_SESSION['user_name']) || empty($_SESSION['user_id'])) return redirect('/user/login');
         return $next($request);
     }

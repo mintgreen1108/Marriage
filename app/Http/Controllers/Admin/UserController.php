@@ -11,15 +11,24 @@ class UserController extends BaseController
 {
     public function index()
     {
-        $map  = ['性别' => 'sex', '年龄' => 'age', '工作' => 'job', '手机号' => 'mobile', '类型' => 'type', '城市' => 'province'];
-        $data = (empty($_POST['class'])) ? UserModel::all() : UserModel::groupBy($map[$_POST['class']])->get();
-        return view('admin.user', ['data' => $data]);
+        return view('admin.user', ['data' => UserModel::all()]);
+    }
+
+    public function classification(Request $request)
+    {
+        $map     = ['性别' => 'sex', '年龄' => 'age', '工作' => 'job', '地区' => 'area'];
+        $classes = UserModel::all()->groupBy($map[$request->input('class')]);
+        foreach ($classes as $class) {
+            foreach ($class as $value)
+                $user[] = $value;
+        }
+        return view('admin.user', ['data' => $user]);
     }
 
 
-    public function destroy(Request $request)
+    public function destroy($userId)
     {
-        UserModel::destroy($request->input('user_id'));
-        return redirect('/admin/account');
+        UserModel::destroy($userId);
+        return redirect('/admin/user');
     }
 }
