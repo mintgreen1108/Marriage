@@ -33,17 +33,15 @@ class StudentController extends Controller
     public function index()
     {
         $data    = StudentCourseModel::all();
-        $courses = '[';
+        $courses = '';
         foreach ($cs = $data->pluck('course')->toArray() as $key => $course) {
-            $courses .= ($key == count($cs) - 1) ? '"' . $course : '"' . $course . '",';
+            $courses .= ($key == count($cs) - 1) ? '"' . $course .'"': '"' . $course . '",';
         }
-        $courses .= ']';
 
-        $scores = '[';
+        $scores = '';
         foreach ($sc = $data->pluck('score')->toArray() as $key => $score) {
             $scores .= ($key == count($sc) - 1) ? $score : $score . ',';
         }
-        $scores .= ']';
         return view('student/index', [
             'data'   => $data,
             'course' => $courses,

@@ -174,16 +174,14 @@
 
 <script>
 
-    var lab = '<?php echo $course?>';
-    var data = '<?php echo $scores?>';
     var ctx = document.getElementById("line");
     var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: lab,
+            labels: [<?php echo $course?>],
             datasets: [{
                 label: '成绩曲线图',
-                data: data
+                data: [<?php echo $scores?>]
             }]
         },
         options: {
