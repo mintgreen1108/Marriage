@@ -4,9 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdminModel extends Model
+class ManagerModel extends Model
 {
-    protected $table = 'admin';
+    protected $table = 'manager';
     protected $guarded = [];
-
 }

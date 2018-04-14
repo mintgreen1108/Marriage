@@ -43,7 +43,7 @@
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a href="index.html" class="logo"><b>后台管理</b></a>
+        <a href="index.html" class="logo"><b>教务管理</b></a>
         <!--logo end-->
         <div class="nav notify-row" id="top_menu">
         </div>
@@ -71,26 +71,32 @@
                 <li class="mt">
                     <a class="active" href="/admin/account">
                         <i class="fa fa-dashboard"></i>
-                        <span>管理员管理</span>
+                        <span>学生管理</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
                     <a href="/admin/user">
                         <i class="fa fa-desktop"></i>
-                        <span>用户管理</span>
+                        <span>教师管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
                     <a href="/admin/evaluation">
                         <i class="fa fa-book"></i>
-                        <span>用户评价</span>
+                        <span>班级管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
                     <a href="/admin/advice">
                         <i class="fa fa-tasks"></i>
-                        <span>推荐相亲对象</span>
+                        <span>课程管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/admin/advice">
+                        <i class="fa fa-tasks"></i>
+                        <span>课程管理</span>
                     </a>
                 </li>
             </ul>
