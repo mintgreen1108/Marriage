@@ -34,7 +34,7 @@ MAIN CONTENT
 <div id="login-page">
     <div class="container">
 
-        <form class="form-login" action="/admin/user/login" method="post">
+        <form class="form-login" action="/manager/login" method="post">
             <h2 class="form-login-heading">管理员登录</h2>
             <div class="login-wrap">
                 <input type="text" class="form-control" name="name" placeholder="用户名" autofocus>

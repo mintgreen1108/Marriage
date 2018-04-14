@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>后台管理</title>
+    <title>教务管理系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -49,7 +49,7 @@
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="/admin/logout">退出</a></li>
+                <li><a class="logout" href="/manager/logout">退出</a></li>
             </ul>
         </div>
     </header>
@@ -66,35 +66,35 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{$_SESSION['admin_name']}}</h5>
+                <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
 
                 <li class="mt">
-                    <a class="active" href="/admin/account">
+                    <a class="active" href="/manager/account">
                         <i class="fa fa-dashboard"></i>
                         <span>学生管理</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
-                    <a href="/admin/user">
+                    <a href="/manager/user">
                         <i class="fa fa-desktop"></i>
                         <span>教师管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/evaluation">
+                    <a href="/manager/evaluation">
                         <i class="fa fa-book"></i>
                         <span>班级管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/advice">
+                    <a href="/manager/advice">
                         <i class="fa fa-tasks"></i>
                         <span>课程管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/advice">
+                    <a href="/manager/advice">
                         <i class="fa fa-tasks"></i>
                         <span>课程管理</span>
                     </a>
@@ -115,25 +115,27 @@
                 <div class="col-md-12">
                     <section class="task-panel tasks-widget">
                         <div class="panel-heading">
-                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>管理员列表</h5></div>
+                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>学生列表</h5></div>
                             <br>
                         </div>
                         <div class="panel-body">
                             <div class="task-content">
 
                                 <ul class="task-list">
-                                    @foreach($data as $admin)
-                                        <li id="admin_{{$admin->id}}">
+                                    @foreach($data as $student)
+                                        <li id="student_{{$student->id}}">
                                             <div class="task-title">
-                                                <span class="hidden span-id task-title-sp">{{$admin->id}}</span>
-                                                <span class="span-name task-title-sp">{{$admin->name}}</span>
-                                                <span class="span-role badge bg-theme">{{$admin->role}}</span>
+                                                <span class="hidden span-id task-title-sp">{{$student->id}}</span>
+                                                <span class="span-name task-title-sp">{{$student->name}}</span>
+                                                <span class="span-sex task-title-sp">{{$student->sex==0?'男':'女'}}</span>
+                                                <span class="span-age task-title-sp">{{$student->age}}</span>
+                                                <span class="span-class task-title-sp">{{$student->class}}</span>
                                                 <div class="pull-right hidden-phone">
-                                                    <button id="{{$admin->id}}"
+                                                    <button id="{{$student->id}}"
                                                             class="btn btn-primary btn-xs btn-update"><i
                                                                 class="fa fa-pencil"></i>
                                                     </button>
-                                                    <a href="account/{{$admin->id}}"
+                                                    <a href="deleteStudent/{{$student->id}}"
                                                        class="btn_delete btn btn-danger btn-xs"><i
                                                                 class="fa fa-trash-o "></i>
                                                     </a>
@@ -149,26 +151,42 @@
                         <div class="col-lg-12">
                             <div class="form-panel">
                                 <h4 class="mb"><i class="fa fa-angle-right"></i> Input Messages</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/admin/account">
+                                <form class="form-horizontal tasi-form" method="post" action="/manager/createStudent">
                                     <input id="user_id" type="text" name="id" class="form-control hidden">
                                     <div class="form-group has-success">
                                         <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">用户名</label>
                                         <div class="col-lg-10">
-                                            <input id="user_name" type="text" name="name" class="form-control">
+                                            <input id="user_name" type="text" name="name" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group has-warning">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">密码</label>
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">性别</label>
                                         <div class="col-lg-10">
-                                            <input id="user_password" type="password" name="password"
-                                                   class="form-control"
+                                            <select id="sex" name="sex" size="1" class="sel">
+                                                <option>请选择分类</option>
+                                                <option class="option" value="0">男</option>
+                                                <option class="option" value="1">女</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-warning">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">年龄</label>
+                                        <div class="col-lg-10">
+                                            <input id="age" type="number" name="age"
+                                                   class="form-control" required
                                             >
                                         </div>
                                     </div>
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputError">角色</label>
+                                    <div class="form-group has-warning">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">班级</label>
                                         <div class="col-lg-10">
-                                            <input id="user_role" type="text" name="role" class="form-control">
+                                            <select id="class" name="class_id" size="1" class="sel">
+                                                <option>请选择分类</option>
+                                                @foreach($classes as $class)
+                                                    <option class="option"
+                                                            value="{{$class->id}}">{{$class->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group has-error">
@@ -221,8 +239,13 @@
     $('.btn-update').click(function () {
         $('#user_id').val($(this).parent().prevAll('.span-id').text());
         $('#user_name').val($(this).parent().prevAll('.span-name').text());
-        $('#user_password').val('null');
-        $('#user_role').val($(this).parent().prev('.span-role').text());
+        $('#sex').val($(this).parent().prevAll('.span-sex').text());
+        $('#age').val($(this).parent().prevAll('.span-age').text());
+        $('#class').val($(this).parent().prevAll('.span-class').text());
+    });
+
+    $('.btn-class').click(function () {
+        $('.class-input').val($("#class option:selected").val());
     });
 </script>
 </body>
