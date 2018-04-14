@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>后台管理</title>
+    <title>教务管理系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -43,13 +43,13 @@
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a href="index.html" class="logo"><b>后台管理</b></a>
+        <a href="index.html" class="logo"><b>教务管理</b></a>
         <!--logo end-->
         <div class="nav notify-row" id="top_menu">
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="/admin/logout">退出</a></li>
+                <li><a class="logout" href="/manager/logout">退出</a></li>
             </ul>
         </div>
     </header>
@@ -66,31 +66,37 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{session('admin_name')}}</h5>
+                <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
 
                 <li class="mt">
-                    <a href="/admin/account">
+                    <a href="/manager/index">
                         <i class="fa fa-dashboard"></i>
-                        <span>管理员管理</span>
+                        <span>学生管理</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
-                    <a href="/admin/user">
+                    <a href="/manager/teacher">
                         <i class="fa fa-desktop"></i>
-                        <span>用户管理</span>
+                        <span>教师管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a class="active" href="/admin/evaluation">
+                    <a class="active" href="/manager/class">
                         <i class="fa fa-book"></i>
-                        <span>用户评价</span>
+                        <span>班级管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/advice">
+                    <a href="/manager/course">
                         <i class="fa fa-tasks"></i>
-                        <span>推荐相亲对象</span>
+                        <span>课程管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/manager/message">
+                        <i class="fa fa-tasks"></i>
+                        <span>消息</span>
                     </a>
                 </li>
             </ul>
@@ -106,38 +112,52 @@
         <section class="wrapper">
             <!-- COMPLEX TO DO LIST -->
             <div class="row mt">
-
                 <div class="col-md-12">
-                    <div class="content-panel">
-                        <h4><i class="fa fa-angle-right"></i> 评价列表</h4>
-                        <hr>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>评价人</th>
-                                <th>内容</th>
-                                <th>分数</th>
-                                <th>对象</th>
-                                <th>创建时间</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($data as $value)
-                                <tr>
-                                    <td>{{$value->user->name}}</td>
-                                    <td>{{$value->content}}</td>
-                                    <td>{{$value->score}}</td>
-                                    <td>{{$value->evaluated->name}}</td>
-                                    <td>{{$value->created_at}}</td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <! --/content-panel -->
-                </div><!-- /col-md-12 -->
+                    <section class="task-panel tasks-widget">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <! -- ALERTS EXAMPLES -->
+                            <div class="showback">
+                                <h4><i class="fa fa-angle-right"></i>消息列表</h4>
+                                @foreach($data as $message)
+                                    <div class="alert alert-success"><b>{{$message->title}}!</b>{{$message->body}}</div>
+                                @endforeach
+                            </div><!-- /showback -->
+                        </div>
+                    </section>
+                    <div class="row mt">
+                        <div class="col-lg-12">
+                            <div class="form-panel">
+                                <h4 class="mb"><i class="fa fa-angle-right"></i>发布消息</h4>
+                                <form class="form-horizontal tasi-form" method="post" action="/manager/createMessage">
+                                    <input id="user_id" type="text" name="id" class="form-control hidden">
+                                    <div class="form-group has-success">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">标题</label>
+                                        <div class="col-lg-10">
+                                            <input id="title" type="text" name="title" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <input id="message_id" type="text" name="message_id" class="form-control hidden" value="{{$_SESSION['manager_id']}}" required>
+                                    <div class="form-group has-success">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">内容</label>
+                                        <div class="col-lg-10">
+                                            <input id="body" type="text" name="body" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-error">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputError"></label>
+                                        <div class="col-lg-10 add-task-row">
+                                            <button type="submit" class="btn btn-success btn-sm pull-left"
+                                                    href="todo_list.html#">确定
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!-- /form-panel -->
+                        </div><!-- /col-lg-12 -->
+                    </div><!-- /row -->
+                </div><!-- /col-md-12-->
+            </div><!-- /row -->
 
-            </div><!-- row -->
 
             <!-- SORTABLE TO DO LIST -->
         </section>
@@ -170,8 +190,13 @@
 </script>
 
 <script type="application/javascript">
-    $('.btn_delete').onclick(function ($this) {
+    $('.btn-update').click(function () {
+        $('#user_id').val($(this).parent().prevAll('.span-id').text());
+        $('#user_name').val($(this).parent().prevAll('.span-name').text());
+    });
 
+    $('.btn-class').click(function () {
+        $('.class-input').val($("#class option:selected").val());
     });
 </script>
 </body>

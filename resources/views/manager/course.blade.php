@@ -7,7 +7,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>后台管理</title>
+    <title>教务管理系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -43,13 +43,13 @@
             <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
         </div>
         <!--logo start-->
-        <a href="index.html" class="logo"><b>后台管理</b></a>
+        <a href="index.html" class="logo"><b>教务管理</b></a>
         <!--logo end-->
         <div class="nav notify-row" id="top_menu">
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="/admin/logout">退出</a></li>
+                <li><a class="logout" href="/manager/logout">退出</a></li>
             </ul>
         </div>
     </header>
@@ -66,31 +66,37 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{session('admin_name')}}</h5>
+                <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
 
                 <li class="mt">
-                    <a href="/admin/account">
+                    <a href="/manager/index">
                         <i class="fa fa-dashboard"></i>
-                        <span>管理员管理</span>
+                        <span>学生管理</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
-                    <a class="active" href="/admin/user">
+                    <a href="/manager/teacher">
                         <i class="fa fa-desktop"></i>
-                        <span>用户管理</span>
+                        <span>教师管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/evaluation">
+                    <a href="/manager/class">
                         <i class="fa fa-book"></i>
-                        <span>用户评价</span>
+                        <span>班级管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/admin/advice">
+                    <a class="active" href="/manager/course">
                         <i class="fa fa-tasks"></i>
-                        <span>推荐相亲对象</span>
+                        <span>课程管理</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="/manager/message">
+                        <i class="fa fa-tasks"></i>
+                        <span>消息</span>
                     </a>
                 </li>
             </ul>
@@ -104,67 +110,67 @@
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
-            <div class="row mt">
-                <div class="col-lg-12">
-                    <div class="form-panel">
-                        <h4 class="mb"><i class="fa fa-angle-right"></i>管理</h4>
-                        <form method="POST" action="/admin/user/classification">
-                            <div class="btn-group">
-                                <input class="hidden class-input" value="">
-                                <select id="class" name="class" size="1" class="sel">
-                                    <option>请选择分类</option>
-                                    <option class="option" value="性别">性别</option>
-                                    <option class="option" value="年龄">年龄</option>
-                                    <option class="option" value="工作">工作</option>
-                                    <option class="option" value="地区">地区</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-theme btn-class">分类</button>
-                        </form>
-                    </div><!-- /form-panel -->
-                </div><!-- /col-lg-12 -->
-            </div><!-- /row -->
-
             <!-- COMPLEX TO DO LIST -->
             <div class="row mt">
                 <div class="col-md-12">
-                    <div class="content-panel">
-                        <table class="table table-striped table-advance table-hover">
-                            <h4><i class="fa fa-angle-right"></i>用户列表</h4>
-                            <hr>
-                            <thead>
-                            <tr>
-                                <th><i class="fa"></i> 姓名</th>
-                                <th><i class="fa"></i> 性别</th>
-                                <th><i class="fa "></i> 年龄</th>
-                                <th><i class="fa "></i> 工作</th>
-                                <th><i class="fa "></i> 手机号</th>
-                                <th><i class=" fa "></i> 城市</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($data as $user)
-                                <tr>
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->sex==1?'男':'女'}}</td>
-                                    <td>{{$user->age}}</td>
-                                    <td>{{$user->job}}</td>
-                                    <td>{{$user->mobile}}</td>
-                                    <td>{{$user->area}}</td>
-                                    <td>
-                                        <a href="/admin/user/delete/{{$user->id}}" class="btn btn-danger btn-xs"><i
-                                                    class="fa fa-trash-o ">
-                                            </i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div><!-- /content-panel -->
-                </div><!-- /col-md-12 -->
+                    <section class="task-panel tasks-widget">
+                        <div class="panel-heading">
+                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>课程</h5></div>
+                            <br>
+                        </div>
+                        <div class="panel-body">
+                            <div class="task-content">
+
+                                <ul class="task-list">
+                                    @foreach($data as $course)
+                                        <li id="student_{{$course->id}}">
+                                            <div class="task-title">
+                                                <span class="hidden span-id task-title-sp">{{$course->id}}</span>
+                                                <span class="span-name task-title-sp">{{$course->name}}</span>
+                                                <div class="pull-right hidden-phone">
+                                                    <button id="{{$course->id}}"
+                                                            class="btn btn-primary btn-xs btn-update"><i
+                                                                class="fa fa-pencil"></i>
+                                                    </button>
+                                                    <a href="deleteCourse/{{$course->id}}"
+                                                       class="btn_delete btn btn-danger btn-xs"><i
+                                                                class="fa fa-trash-o "></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="row mt">
+                        <div class="col-lg-12">
+                            <div class="form-panel">
+                                <h4 class="mb"><i class="fa fa-angle-right"></i> 添加／更新课程</h4>
+                                <form class="form-horizontal tasi-form" method="post" action="/manager/createCourse">
+                                    <input id="user_id" type="text" name="id" class="form-control hidden">
+                                    <div class="form-group has-success">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">课程名</label>
+                                        <div class="col-lg-10">
+                                            <input id="user_name" type="text" name="name" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-error">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputError"></label>
+                                        <div class="col-lg-10 add-task-row">
+                                            <button type="submit" class="btn btn-success btn-sm pull-left"
+                                                    href="todo_list.html#">确定
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!-- /form-panel -->
+                        </div><!-- /col-lg-12 -->
+                    </div><!-- /row -->
+                </div><!-- /col-md-12-->
             </div><!-- /row -->
+
 
             <!-- SORTABLE TO DO LIST -->
         </section>
@@ -197,10 +203,11 @@
 </script>
 
 <script type="application/javascript">
-
-    $('.btn-class').click(function () {
-        $('.class-input').val($("#class option:selected").val());
+    $('.btn-update').click(function () {
+        $('#user_id').val($(this).parent().prevAll('.span-id').text());
+        $('#user_name').val($(this).parent().prevAll('.span-name').text());
     });
+
 </script>
 </body>
 </html>

@@ -69,34 +69,34 @@
                 <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
 
                 <li class="mt">
-                    <a class="active" href="/manager/account">
+                    <a href="/manager/index">
                         <i class="fa fa-dashboard"></i>
                         <span>学生管理</span>
                     </a>
                 </li>
 
                 <li class="sub-menu">
-                    <a href="/manager/user">
+                    <a class="active" href="/manager/teacher">
                         <i class="fa fa-desktop"></i>
                         <span>教师管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/manager/evaluation">
+                    <a href="/manager/class">
                         <i class="fa fa-book"></i>
                         <span>班级管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/manager/advice">
+                    <a href="/manager/course">
                         <i class="fa fa-tasks"></i>
                         <span>课程管理</span>
                     </a>
                 </li>
                 <li class="sub-menu">
-                    <a href="/manager/advice">
+                    <a href="/manager/message">
                         <i class="fa fa-tasks"></i>
-                        <span>课程管理</span>
+                        <span>消息</span>
                     </a>
                 </li>
             </ul>
@@ -115,27 +115,27 @@
                 <div class="col-md-12">
                     <section class="task-panel tasks-widget">
                         <div class="panel-heading">
-                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>学生列表</h5></div>
+                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>教师列表</h5></div>
                             <br>
                         </div>
                         <div class="panel-body">
                             <div class="task-content">
 
                                 <ul class="task-list">
-                                    @foreach($data as $student)
-                                        <li id="student_{{$student->id}}">
+                                    @foreach($data as $teacher)
+                                        <li id="student_{{$teacher->id}}">
                                             <div class="task-title">
-                                                <span class="hidden span-id task-title-sp">{{$student->id}}</span>
-                                                <span class="span-name task-title-sp">{{$student->name}}</span>
-                                                <span class="span-sex task-title-sp">{{$student->sex==0?'男':'女'}}</span>
-                                                <span class="span-age task-title-sp">{{$student->age}}</span>
-                                                <span class="span-class task-title-sp">{{$student->class}}</span>
+                                                <span class="hidden span-id task-title-sp">{{$teacher->id}}</span>
+                                                <span class="span-name task-title-sp">{{$teacher->name}}</span>
+                                                <span class="span-sex task-title-sp">{{$teacher->sex==0?'男':'女'}}</span>
+                                                <span class="span-age task-title-sp">{{$teacher->age}}</span>
+                                                <span class="span-mobile task-title-sp">{{$teacher->mobile}}</span>
                                                 <div class="pull-right hidden-phone">
-                                                    <button id="{{$student->id}}"
+                                                    <button id="{{$teacher->id}}"
                                                             class="btn btn-primary btn-xs btn-update"><i
                                                                 class="fa fa-pencil"></i>
                                                     </button>
-                                                    <a href="deleteStudent/{{$student->id}}"
+                                                    <a href="deleteTeacher/{{$teacher->id}}"
                                                        class="btn_delete btn btn-danger btn-xs"><i
                                                                 class="fa fa-trash-o "></i>
                                                     </a>
@@ -150,8 +150,8 @@
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb"><i class="fa fa-angle-right"></i>添加／更新学生</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/manager/createStudent">
+                                <h4 class="mb"><i class="fa fa-angle-right"></i> 添加／更新教师</h4>
+                                <form class="form-horizontal tasi-form" method="post" action="/manager/createTeacher">
                                     <input id="user_id" type="text" name="id" class="form-control hidden">
                                     <div class="form-group has-success">
                                         <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">姓名</label>
@@ -178,15 +178,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group has-warning">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">班级</label>
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputWarning">手机号</label>
                                         <div class="col-lg-10">
-                                            <select id="class" name="class_id" size="1" class="sel">
-                                                <option>请选择分类</option>
-                                                @foreach($classes as $class)
-                                                    <option class="option"
-                                                            value="{{$class->id}}">{{$class->name}}</option>
-                                                @endforeach
-                                            </select>
+                                            <input id="mobile" type="number" name="mobile"
+                                                   class="form-control" required
+                                            >
                                         </div>
                                     </div>
                                     <div class="form-group has-error">
@@ -241,7 +237,7 @@
         $('#user_name').val($(this).parent().prevAll('.span-name').text());
         $('#sex').val($(this).parent().prevAll('.span-sex').text());
         $('#age').val($(this).parent().prevAll('.span-age').text());
-        $('#class').val($(this).parent().prevAll('.span-class').text());
+        $('#mobile').val($(this).parent().prevAll('.span-mobile').text());
     });
 
     $('.btn-class').click(function () {
