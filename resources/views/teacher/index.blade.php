@@ -49,7 +49,7 @@
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="/manager/logout">退出</a></li>
+                <li><a class="logout" href="/teacher/logout">退出</a></li>
             </ul>
         </div>
     </header>
@@ -66,39 +66,34 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
+                <h5 class="centered">{{$_SESSION['teacher_name']}}</h5>
 
                 <li class="mt">
-                    <a href="/manager/index">
+                    <a class="active" href="/teacher/index">
                         <i class="fa fa-dashboard"></i>
-                        <span>学生管理</span>
+                        <span>学生成绩查询</span>
+                    </a>
+                </li>
+                <li class="mt">
+                    <a href="/teacher/score">
+                        <i class="fa fa-dashboard"></i>
+                        <span>学生成绩录入</span>
                     </a>
                 </li>
 
-                <li class="sub-menu">
-                    <a href="/manager/teacher">
-                        <i class="fa fa-desktop"></i>
-                        <span>教师管理</span>
+                <li class="mt">
+                    <a href="/teacher/reply">
+                        <i class="fa fa-dashboard"></i>
+                        <span>答疑板</span>
                     </a>
                 </li>
-                <li class="sub-menu">
-                    <a  href="/manager/class">
-                        <i class="fa fa-book"></i>
-                        <span>班级管理</span>
+                <li class="mt">
+                    <a href="/teacher/password">
+                        <i class="fa fa-dashboard"></i>
+                        <span>修改密码</span>
                     </a>
                 </li>
-                <li class="sub-menu">
-                    <a href="/manager/course">
-                        <i class="fa fa-tasks"></i>
-                        <span>课程管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="active" href="/manager/message">
-                        <i class="fa fa-tasks"></i>
-                        <span>消息</span>
-                    </a>
-                </li>
+
             </ul>
             <!-- sidebar menu end-->
         </div>
@@ -110,44 +105,28 @@
     <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
-            <!-- COMPLEX TO DO LIST -->
+
             <div class="row mt">
                 <div class="col-md-12">
-                    <section class="task-panel tasks-widget">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <! -- ALERTS EXAMPLES -->
-                            <div class="showback">
-                                <h4><i class="fa fa-angle-right"></i>消息列表</h4>
-                                @foreach($data as $message)
-                                    <div class="alert alert-success"><b>{{$message->title}}!</b>{{$message->body}}</div>
-                                @endforeach
-                            </div><!-- /showback -->
-                        </div>
-                    </section>
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb"><i class="fa fa-angle-right"></i>发布消息</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/manager/createMessage">
-                                    <input id="user_id" type="text" name="id" class="form-control hidden">
+                                <form class="form-horizontal tasi-form" method="post" action="/teacher/search">
                                     <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">标题</label>
-                                        <div class="col-lg-10">
-                                            <input id="title" type="text" name="title" class="form-control" required>
+                                        <div class="col-lg-2">
+                                            <select id="course_id" name="type" size="1" class="sel">
+                                                <option class="option" value="1">课程</option>
+                                                <option class="option" value="2">学号</option>
+                                                <option class="option" value="3">姓名</option>
+                                            </select>
                                         </div>
-                                    </div>
-                                    <input id="message_id" type="text" name="message_id" class="form-control hidden" value="{{$_SESSION['manager_id']}}" required>
-                                    <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">内容</label>
-                                        <div class="col-lg-10">
-                                            <input id="body" type="text" name="body" class="form-control" required>
+                                        <div class="col-lg-5">
+                                            <input id="user_name" type="text" name="key" class="form-control"
+                                                   required>
                                         </div>
-                                    </div>
-                                    <div class="form-group has-error">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputError"></label>
-                                        <div class="col-lg-10 add-task-row">
+                                        <div class="col-lg-4 add-task-row">
                                             <button type="submit" class="btn btn-success btn-sm pull-left"
-                                                    href="todo_list.html#">确定
+                                                    href="todo_list.html#"><s>搜索</s>
                                             </button>
                                         </div>
                                     </div>
@@ -156,7 +135,48 @@
                         </div><!-- /col-lg-12 -->
                     </div><!-- /row -->
                 </div><!-- /col-md-12-->
+            </div>
+            <!-- COMPLEX TO DO LIST -->
+            <div class="row mt">
+                <div class="col-md-12">
+                    @foreach($data as $course)
+                        <section class="task-panel tasks-widget">
+                            <div class="panel-heading">
+                                <div class="pull-left"><h5><i class="fa fa-tasks"></i>{{$course->course}}</h5></div>
+                                <br>
+                            </div>
+                            <div class="panel-body">
+                                <div class="task-content">
+
+                                    <ul class="task-list">
+                                        @foreach($course->students as $stuCourse)
+                                            <li id="">
+                                                <div class="task-title">
+                                                    <span class="badge bg-warning">学生</span>
+                                                    <span class="span-name task-title-sp">{{$stuCourse->student->name}}</span>
+                                                    <span class="badge bg-success">分数</span>
+                                                    <span class="span-sex task-title-sp">{{$stuCourse->score}}</span>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    @endforeach
+                </div><!-- /col-md-12-->
             </div><!-- /row -->
+
+            <div class="row mt">
+                <div class="col-lg-6">
+                    <div class="content-panel">
+                        <h4><i class="fa fa-angle-right"></i> 成绩曲线分析</h4>
+                        <div class="panel-body text-center">
+                            <canvas id="line" height="300" width="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <!-- SORTABLE TO DO LIST -->
@@ -186,18 +206,29 @@
 <script src="/assets/js/sparkline-chart.js"></script>
 <script src="/assets/js/zabuto_calendar.js"></script>
 
-<script type="text/javascript">
+<!--script for this page-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+<script>
+    var ctx = document.getElementById("line");
+    var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [<?php echo $x ?? ''?>],
+            datasets: [{
+                label: '成绩曲线图',
+                data: [<?php echo $y ?? ''?>]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+    });
 </script>
 
-<script type="application/javascript">
-    $('.btn-update').click(function () {
-        $('#user_id').val($(this).parent().prevAll('.span-id').text());
-        $('#user_name').val($(this).parent().prevAll('.span-name').text());
-    });
-
-    $('.btn-class').click(function () {
-        $('.class-input').val($("#class option:selected").val());
-    });
-</script>
 </body>
 </html>

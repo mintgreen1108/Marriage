@@ -49,7 +49,7 @@
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="/manager/logout">退出</a></li>
+                <li><a class="logout" href="/teacher/logout">退出</a></li>
             </ul>
         </div>
     </header>
@@ -66,37 +66,30 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
-
+                <h5 class="centered">{{$_SESSION['teacher_name']}}</h5>
                 <li class="mt">
-                    <a href="/manager/index">
+                    <a href="/teacher/index">
                         <i class="fa fa-dashboard"></i>
-                        <span>学生管理</span>
+                        <span>学生成绩查询</span>
+                    </a>
+                </li>
+                <li class="mt">
+                    <a href="/teacher/score">
+                        <i class="fa fa-dashboard"></i>
+                        <span>学生成绩录入</span>
                     </a>
                 </li>
 
-                <li class="sub-menu">
-                    <a href="/manager/teacher">
-                        <i class="fa fa-desktop"></i>
-                        <span>教师管理</span>
+                <li class="active" class="mt">
+                    <a href="/teacher/reply">
+                        <i class="fa fa-dashboard"></i>
+                        <span>答疑板</span>
                     </a>
                 </li>
-                <li class="sub-menu">
-                    <a  href="/manager/class">
-                        <i class="fa fa-book"></i>
-                        <span>班级管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="/manager/course">
-                        <i class="fa fa-tasks"></i>
-                        <span>课程管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="active" href="/manager/message">
-                        <i class="fa fa-tasks"></i>
-                        <span>消息</span>
+                <li class="mt">
+                    <a href="/teacher/password">
+                        <i class="fa fa-dashboard"></i>
+                        <span>修改密码</span>
                     </a>
                 </li>
             </ul>
@@ -114,33 +107,57 @@
             <div class="row mt">
                 <div class="col-md-12">
                     <section class="task-panel tasks-widget">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <! -- ALERTS EXAMPLES -->
-                            <div class="showback">
-                                <h4><i class="fa fa-angle-right"></i>消息列表</h4>
-                                @foreach($data as $message)
-                                    <div class="alert alert-success"><b>{{$message->title}}!</b>{{$message->body}}</div>
-                                @endforeach
-                            </div><!-- /showback -->
+                        <div class="panel-heading">
+                            <div class="pull-left"><h5><i class="fa fa-tasks"></i>问题列表</h5></div>
+                            <br>
+                        </div>
+                        <div class="panel-body">
+                            <div class="task-content">
+
+                                <ul class="task-list">
+                                    @foreach($data as $question)
+                                        <li id="student_{{$question->id}}">
+                                            <div class="task-title">
+                                                <span class="hidden span-id task-title-sp">{{$question->id}}</span>
+                                                <span class="badge bg-success">问：</span>
+                                                <span class="span-question task-title-sp">{{$question->question}}</span>
+                                                <span class="span-time task-title-sp">{{$question->created_at}}</span>
+                                                <button id="{{$question->id}}"
+                                                        class="btn btn-primary btn-xs btn-update"><i
+                                                            class="fa fa-pencil"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            @foreach($question->reply as $reply)
+                                                <span class="badge bg-theme">回答人：</span>
+                                                <span class="span-reply task-title-sp">{{$reply->teacher}}</span>
+                                                <span class="badge bg-warning">内容：</span>
+                                                <span class="span-reply task-title-sp">{{$reply->reply}}</span>
+                                                <span class="span-reply task-title-sp">{{$reply->created_at}}</span>
+                                            @endforeach
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     </section>
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb"><i class="fa fa-angle-right"></i>发布消息</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/manager/createMessage">
-                                    <input id="user_id" type="text" name="id" class="form-control hidden">
+                                <h4 class="mb"><i class="fa fa-angle-right"></i>我要回答</h4>
+                                <form class="form-horizontal tasi-form" method="post" action="/teacher/createReply">
+                                    <input id="question_id" type="text" name="question_id" class="form-control hidden">
                                     <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">标题</label>
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">问题</label>
                                         <div class="col-lg-10">
-                                            <input id="title" type="text" name="title" class="form-control" required>
+                                            <input id="question" type="text" name="question" class="form-control" required readonly>
                                         </div>
                                     </div>
-                                    <input id="message_id" type="text" name="message_id" class="form-control hidden" value="{{$_SESSION['manager_id']}}" required>
                                     <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">内容</label>
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">回答</label>
                                         <div class="col-lg-10">
-                                            <input id="body" type="text" name="body" class="form-control" required>
+                                            <input id="user_name" type="text" name="reply" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="form-group has-error">
@@ -191,12 +208,8 @@
 
 <script type="application/javascript">
     $('.btn-update').click(function () {
-        $('#user_id').val($(this).parent().prevAll('.span-id').text());
-        $('#user_name').val($(this).parent().prevAll('.span-name').text());
-    });
-
-    $('.btn-class').click(function () {
-        $('.class-input').val($("#class option:selected").val());
+        $('#question_id').val($(this).prevAll('.span-id').text());
+        $('#question').val($(this).prevAll('.span-question').text());
     });
 </script>
 </body>

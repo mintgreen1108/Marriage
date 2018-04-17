@@ -7,7 +7,9 @@ use App\ClassModel;
 use App\CourseModel;
 use App\ManagerModel;
 use App\MessageModel;
+use App\StudentCourseModel;
 use App\StudentModel;
+use App\TeacherCourseModel;
 use App\TeacherModel;
 use Illuminate\Http\Request;
 
@@ -96,6 +98,8 @@ class ManagerController extends Controller
     public function deleteCourse($id)
     {
         CourseModel::where('id', $id)->delete();
+        StudentCourseModel::where('course_id', $id)->delete();
+        TeacherCourseModel::where('course_id', $id)->delete();
         return redirect('manager/course');
     }
 

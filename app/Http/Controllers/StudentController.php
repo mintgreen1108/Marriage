@@ -32,10 +32,10 @@ class StudentController extends Controller
 
     public function index()
     {
-        $data    = StudentCourseModel::all();
+        $data    = StudentCourseModel::where('student_id', $_SESSION['student_id'])->get();
         $courses = '';
         foreach ($cs = $data->pluck('course')->toArray() as $key => $course) {
-            $courses .= ($key == count($cs) - 1) ? '"' . $course .'"': '"' . $course . '",';
+            $courses .= ($key == count($cs) - 1) ? '"' . $course . '"' : '"' . $course . '",';
         }
 
         $scores = '';

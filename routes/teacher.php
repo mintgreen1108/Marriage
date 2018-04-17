@@ -1,18 +1,22 @@
 <?php
 
-use Illuminate\Http\Request;
+Route::get('/', function () {
+    return view('teacher/login');
+});
+Route::post('login', 'TeacherController@login');
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::group(['middleware' => 'check.teacher'], function () {
+    Route::get('index', 'TeacherController@index');
+    Route::get('logout', 'TeacherController@logout');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+    Route::get('password', 'TeacherController@pwd');
+    Route::post('modifyPwd', 'TeacherController@modifyPwd');
+
+    Route::get('reply', 'TeacherController@reply');
+    Route::post('createReply', 'TeacherController@createReply');
+
+    Route::get('score', 'TeacherController@score');
+    Route::post('createScore', 'TeacherController@createScore');
+    Route::post('search', 'TeacherController@search');
 });

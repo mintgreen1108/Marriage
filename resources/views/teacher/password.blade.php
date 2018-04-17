@@ -49,7 +49,7 @@
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="/manager/logout">退出</a></li>
+                <li><a class="logout" href="/teacher/logout">退出</a></li>
             </ul>
         </div>
     </header>
@@ -66,37 +66,30 @@
 
                 <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle"
                                                                 width="60"></a></p>
-                <h5 class="centered">{{$_SESSION['manager_name']}}</h5>
+                <h5 class="centered">{{$_SESSION['teacher_name']}}</h5>
+                <li class="mt">
+                    <a href="/teacher/index">
+                        <i class="fa fa-dashboard"></i>
+                        <span>学生成绩查询</span>
+                    </a>
+                </li>
+                <li class="mt">
+                    <a href="/teacher/score">
+                        <i class="fa fa-dashboard"></i>
+                        <span>学生成绩录入</span>
+                    </a>
+                </li>
 
                 <li class="mt">
-                    <a href="/manager/index">
+                    <a href="/teacher/reply">
                         <i class="fa fa-dashboard"></i>
-                        <span>学生管理</span>
+                        <span>答疑板</span>
                     </a>
                 </li>
-
-                <li class="sub-menu">
-                    <a href="/manager/teacher">
-                        <i class="fa fa-desktop"></i>
-                        <span>教师管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a  href="/manager/class">
-                        <i class="fa fa-book"></i>
-                        <span>班级管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a href="/manager/course">
-                        <i class="fa fa-tasks"></i>
-                        <span>课程管理</span>
-                    </a>
-                </li>
-                <li class="sub-menu">
-                    <a class="active" href="/manager/message">
-                        <i class="fa fa-tasks"></i>
-                        <span>消息</span>
+                <li class="mt">
+                    <a class="active" href="/teacher/password">
+                        <i class="fa fa-dashboard"></i>
+                        <span>修改密码</span>
                     </a>
                 </li>
             </ul>
@@ -113,34 +106,31 @@
             <!-- COMPLEX TO DO LIST -->
             <div class="row mt">
                 <div class="col-md-12">
-                    <section class="task-panel tasks-widget">
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <! -- ALERTS EXAMPLES -->
-                            <div class="showback">
-                                <h4><i class="fa fa-angle-right"></i>消息列表</h4>
-                                @foreach($data as $message)
-                                    <div class="alert alert-success"><b>{{$message->title}}!</b>{{$message->body}}</div>
-                                @endforeach
-                            </div><!-- /showback -->
-                        </div>
-                    </section>
                     <div class="row mt">
                         <div class="col-lg-12">
                             <div class="form-panel">
-                                <h4 class="mb"><i class="fa fa-angle-right"></i>发布消息</h4>
-                                <form class="form-horizontal tasi-form" method="post" action="/manager/createMessage">
+                                <h4 class="mb"><i class="fa fa-angle-right"></i> 修改密码</h4>
+                                <form class="form-horizontal tasi-form" method="post" action="/teacher/modifyPwd">
                                     <input id="user_id" type="text" name="id" class="form-control hidden">
                                     <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">标题</label>
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">原密码</label>
                                         <div class="col-lg-10">
-                                            <input id="title" type="text" name="title" class="form-control" required>
+                                            <input id="user_name" type="password" name="password" class="form-control"
+                                                   required>
                                         </div>
                                     </div>
-                                    <input id="message_id" type="text" name="message_id" class="form-control hidden" value="{{$_SESSION['manager_id']}}" required>
+
                                     <div class="form-group has-success">
-                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">内容</label>
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">密码</label>
                                         <div class="col-lg-10">
-                                            <input id="body" type="text" name="body" class="form-control" required>
+                                            <input id="user_name" type="password" name="pwd" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-success">
+                                        <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">再次确认</label>
+                                        <div class="col-lg-10">
+                                            <input id="user_name" type="password" name="pwd_repeat" class="form-control"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-group has-error">
@@ -190,14 +180,6 @@
 </script>
 
 <script type="application/javascript">
-    $('.btn-update').click(function () {
-        $('#user_id').val($(this).parent().prevAll('.span-id').text());
-        $('#user_name').val($(this).parent().prevAll('.span-name').text());
-    });
-
-    $('.btn-class').click(function () {
-        $('.class-input').val($("#class option:selected").val());
-    });
 </script>
 </body>
 </html>
