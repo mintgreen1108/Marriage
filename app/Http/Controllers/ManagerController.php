@@ -22,23 +22,14 @@ class ManagerController extends Controller
 
     public function login(Request $request)
     {
-        try {
-            session_start();
-            $user = ManagerModel::where('name', $request->input('name'))->firstOrFail();
-            if (md5($request->input('password')) != $user->password) throw new \Exception('error');
-            $_SESSION['manager_name'] = $user->name;
-            $_SESSION['manager_id']   = $user->id;
-            return redirect('manager/index');
-        } catch (\Throwable $e) {
-            return \Response::json(['msg' => '用户名或密码错误'], 500);
-        }
+
     }
 
     public function logout()
     {
         unset($_SESSION['manager_name']);
         unset($_SESSION['manager_name']);
-        return redirect('manager/');
+        return redirect('/');
     }
 
     public function createStudent(Request $request)

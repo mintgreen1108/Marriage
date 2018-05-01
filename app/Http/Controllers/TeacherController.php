@@ -15,23 +15,13 @@ class TeacherController extends Controller
 {
     public function login(Request $request)
     {
-        try {
-            session_start();
-            $user = TeacherModel::where('name', $request->input('name'))->firstOrFail();
-            if (md5($request->input('password')) != $user->password) throw new \Exception('error');
-            $_SESSION['teacher_name'] = $user->name;
-            $_SESSION['teacher_id']   = $user->id;
-            return redirect('teacher/index');
-        } catch (\Throwable $e) {
-            return \Response::json(['msg' => '用户名或密码错误'], 500);
-        }
     }
 
     public function logout()
     {
         unset($_SESSION['teacher_name']);
         unset($_SESSION['teacher_id']);
-        return redirect('teacher/');
+        return redirect('/');
     }
 
     public function index()
